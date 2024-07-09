@@ -36,10 +36,6 @@ def show_phone(args: str):
         print("Invalid input, you must enter command and your name for show phone")
 
 
-def show_all():
-    print(contact)
-
-
 def parser_input(user_input: str):
     cmd, *args = user_input.split()
     cmd = cmd.strip().lower()
@@ -64,7 +60,7 @@ def main():
         elif command == 'show':
             show_phone(args)
         elif command == "all":
-            show_all()
+            print(contact)
         else:
             print("Invalid command.")
 

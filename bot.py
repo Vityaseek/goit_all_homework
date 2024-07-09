@@ -43,7 +43,7 @@ def parser_input(user_input: str):
 
 
 def main():
-    print("Welcome to parser bot")
+    print("Welcome to parser bot! I have 5 general command: 'hello', 'add', 'change', 'show' and 'all'")
     while True:
         user_input = input('write command:')
         command, *args = parser_input(user_input)

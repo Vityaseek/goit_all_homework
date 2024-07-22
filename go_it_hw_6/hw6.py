@@ -10,13 +10,16 @@ class Field:
 
 
 class Name(Field):
-    pass
+    def __init__(self, val):
+        super().__init__(val)
+        return None
 
 
 class Phone(Field):
-    def validation(self):
+    def __init__(self, val):
+        super().__init__(val)
         if len(self.value) == 10:
-            return self.value
+            return None
 
 
 class Record:
@@ -25,7 +28,7 @@ class Record:
         self.phones = []
 
     def add_phone(self, value):
-        valid_phone = Phone(value).validation()
+        valid_phone = Phone(value)
         if valid_phone:
             self.phones.append(valid_phone)
         else:
@@ -35,19 +38,22 @@ class Record:
         [self.phones.remove(value) if value in self.phones else None]
 
     def edit_phone(self, old_value, new_value):
-        if old_value in self.phones and len(new_value) == 10:
-            self.phones[self.phones.index(old_value)] = new_value
-        else:
-            raise ValueError
+        for i in self.phones:
+            if i.value == old_value:
+                x = self.phones.index(i)
+                self.phones[x] = Phone(new_value)
+            else:
+                return None
 
-    def find_phone(self, value) -> Phone:
-        if value in self.phones:
-            return value
+    def find_phone(self, phone) -> Phone:
+        for i in self.phones:
+            if i.value == phone:
+                return phone
         else:
             return None
 
     def __str__(self):
-        return f"Contact name: {self.name.value}, phones: {'; '.join(p for p in self.phones)}"
+        return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
 
 
 class AddressBook(UserDict):
@@ -66,7 +72,7 @@ class AddressBook(UserDict):
             self.data.pop(name)
 
     def __str__(self):
-        return f'{["; ".join(str(record) for record in self.data.values())]}'
+        return f'{[" | ".join(str(record) for record in self.data.values())]}'
 
 
 # Створення нової адресної книги
@@ -101,3 +107,4 @@ print(f"{john.name}: {found_phone}")  # Виведення: John: 5555555555
 
 # Видалення запису Jane
 book.delete("Jane")
+print(book)

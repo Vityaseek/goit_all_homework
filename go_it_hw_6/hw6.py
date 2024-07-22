@@ -72,7 +72,7 @@ class AddressBook(UserDict):
             self.data.pop(name)
 
     def __str__(self):
-        return f'{[" | ".join(str(record) for record in self.data.values())]}'
+        return f'{" | ".join(str(record) for record in self.data.values())}'
 
 
 # Створення нової адресної книги

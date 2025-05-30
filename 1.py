@@ -1,23 +1,36 @@
-# Устанавливаем цены на продукты
-price_per_croissant = 1.04
-price_per_glass = 0.34
-price_per_coffee_pack = 4.42
+import random
+from datetime import datetime
 
-# Количество каждого продукта
-num_croissants = int(input("Введите количество круассанов: "))
-num_glasses = int(input("Введите количество стаканов: "))
-num_coffee_packs = int(input("Введите количество упаковок кофе: "))
 
-# Вычисление общей стоимости
-total_cost = num_croissants * price_per_croissant + \
-    num_glasses * price_per_glass + \
-    num_coffee_packs * price_per_coffee_pack
+def get_days_from_today(date):
+    today = datetime.today().date()
+    date_object = datetime.strptime(date, "%Y-%m-%d").date()
+    delta = date_object - today
+    return delta.days
 
-total_dollars = int(total_cost)
-total_cents = int(total_cost * 100)
 
-# Вывод результата
-print(f"Общая стоимость в полных долларах: {total_dollars} долларов")
-print(f"Общая стоимость в центах: {total_cents} центов")
+print(get_days_from_today("2023-04-01"))
 
-my_list = [1, 2, 3, 4, 5]
+
+def get_numbers_ticket(min, max, quantity):
+    numbers = set()
+    try:
+        quantity, min, max = int(quantity), int(min), int(max)
+        if (min < 1 or min >= 1000) or (max > 1000 or max < 1) or (quantity < 1):
+            return (f'Минимальное значение(min) должно быть больше или равно 1 но не более 999,'
+                    'а максимальное значение(max) не может быть больше 1000 или быть меньше 1')
+    except (ValueError, TypeError):
+        return 'Неверный формат записи: min,max,quantity нужно указать числом больше нуля'
+    else:
+        if quantity <= max and quantity >= min:
+            while True:
+                rand_int = random.randint(min, max)
+                numbers.add(rand_int)
+                if len(numbers) == quantity:
+                    break
+        else:
+            return "Количество номеров(quantity) не может быть меньше единицы или больше max"
+        return sorted(numbers)
+
+
+print(get_numbers_ticket(1, 150, 70))
